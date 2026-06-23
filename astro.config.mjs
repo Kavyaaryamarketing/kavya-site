@@ -1,8 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// CHANGE THIS to your real domain once you have it (used for SEO, sitemap, RSS).
+// Your live site URL (used for SEO, sitemap, RSS, social previews).
+// When you add a custom domain later, change this line to that domain.
 export default defineConfig({
-  site: 'https://kavya.example.com',
+  site: 'https://kavya-site.vercel.app',
   integrations: [sitemap()],
 });

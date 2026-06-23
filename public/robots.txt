@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kavya.example.com/sitemap-index.xml
+Sitemap: https://kavya-site.vercel.app/sitemap-index.xml
