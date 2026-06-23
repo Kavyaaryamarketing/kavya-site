@@ -1,0 +1,151 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import Signup from '../components/Signup.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('journal', (p) => !p.data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const featured = posts.slice(0, 3);
+
+const labPosts = (await getCollection('lab', (p) => !p.data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const latestLab = labPosts[0];
+
+const pillars = [
+  { name: 'Life', blurb: 'Reflections on work, growth, and figuring it out.' },
+  { name: 'Wellness', blurb: 'Routines, energy, and taking care of yourself.' },
+  { name: 'Books', blurb: 'What I’m reading and why it’s worth your time.' },
+  { name: 'Career', blurb: 'Product lessons and navigating transitions.' },
+];
+---
+<Base>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">Personal notes · built in public</span>
+      <h1 class="hero__title">Thinking out loud about work, wellness,<br />and the life I’m building.</h1>
+      <p class="hero__lede">
+        I’m Kavya — a product manager by day, endlessly curious the rest of the time.
+        This is where I write about careers, books, healthier routines, and (openly)
+        how I’m growing this little corner of the internet.
+      </p>
+      <div class="hero__cta">
+        <a href="/newsletter" class="btn">Join the newsletter →</a>
+        <a href="/journal" class="btn btn--ghost">Read the journal</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO STRIP -->
+  <section class="container strip reveal">
+    <p>
+      Part journal, part experiment. I share what I’m learning — and I treat this whole
+      site as a lab for the marketing I’m teaching myself. You get honest writing;
+      I get to show my work.
+    </p>
+  </section>
+
+  <!-- FEATURED -->
+  <section class="container section">
+    <div class="section__head">
+      <h2>Latest writing</h2>
+      <a href="/journal" class="muted">All posts →</a>
+    </div>
+    {featured.length === 0 ? (
+      <p class="muted">First essays coming soon. Add Markdown files in <code>src/content/journal</code>.</p>
+    ) : (
+      <div class="grid3">
+        {featured.map((p) => (
+          <PostCard
+            href={`/journal/${p.slug}`}
+            title={p.data.title}
+            description={p.data.description}
+            pillar={p.data.pillar}
+            date={p.data.date}
+            readTime={`${Math.max(1, Math.round(p.body.split(/\s+/).length / 200))} min`}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+
+  <!-- PILLARS -->
+  <section class="container section">
+    <h2 class="section__centered">Five doorways in</h2>
+    <div class="pillars">
+      {pillars.map((p) => (
+        <a class="pillar reveal" href={`/journal?pillar=${p.name}`}>
+          <span class={`tag tag--${p.name.toLowerCase()}`}>{p.name}</span>
+          <p>{p.blurb}</p>
+        </a>
+      ))}
+      <a class="pillar pillar--lab reveal" href="/lab">
+        <span class="tag" style="background:var(--plum);color:#fff;">Growth Lab</span>
+        <p>The marketing experiments — with the real numbers attached.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- GROWTH LAB BAND -->
+  <section class="lab-band">
+    <div class="container lab-band__inner reveal">
+      <div>
+        <span class="eyebrow" style="color:var(--rose);">Building in public</span>
+        <h2 class="lab-band__title">I publish the real numbers every month.</h2>
+        <p class="lab-band__sub">Traffic, subscribers, what I tried, what flopped. Peek behind the curtain.</p>
+        <a href="/lab" class="btn" style="background:var(--white);color:var(--plum);">Open the Growth Lab →</a>
+      </div>
+      <div class="lab-band__stat">
+        <span class="lab-band__num">{latestLab?.data.metric ?? 'Day 1'}</span>
+        <span class="lab-band__label">{latestLab ? latestLab.data.title : 'The experiment starts now'}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <div class="container"><Signup /></div>
+
+  <!-- NOW SNIPPET -->
+  <section class="container now-snip reveal">
+    <span class="eyebrow">Right now</span>
+    <p>Finding my writing rhythm and running my first newsletter-growth experiment. <a href="/now">See what I’m up to →</a></p>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: clamp(3rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem); }
+  .hero__title { margin: 0.8rem 0 1.2rem; max-width: 18ch; }
+  .hero__lede { font-size: 1.2rem; max-width: 42rem; color: #524d48; margin: 0 0 1.8rem; }
+  .hero__cta { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+  .strip { max-width: 48rem; margin-block: 1rem 2rem; }
+  .strip p { font-family: var(--display); font-style: italic; font-size: 1.35rem; color: var(--plum); line-height: 1.45; }
+
+  .section { padding-block: 2.5rem; }
+  .section__head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.5rem; }
+  .section__head a { text-decoration: none; font-size: 0.95rem; }
+  .section__centered { text-align: center; margin-bottom: 1.8rem; }
+
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  @media (max-width: 820px) { .grid3 { grid-template-columns: 1fr; } }
+
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .pillar { display: block; text-decoration: none; color: inherit; background: var(--white); border: 1px solid var(--sand); border-radius: var(--radius); padding: 1.2rem; transition: transform 0.2s, border-color 0.2s; }
+  .pillar:hover { transform: translateY(-3px); border-color: var(--rose); }
+  .pillar p { margin: 0.7rem 0 0; font-size: 0.92rem; color: #524d48; }
+  .pillar--lab { background: var(--cream); border-style: dashed; }
+  @media (max-width: 820px) { .pillars { grid-template-columns: 1fr; } }
+
+  .lab-band { background: var(--plum-deep); color: var(--cream); margin-top: 3rem; padding: clamp(2.5rem, 6vw, 4rem) 0; }
+  .lab-band__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+  .lab-band__title { color: var(--white); margin: 0.5rem 0; max-width: 16ch; }
+  .lab-band__sub { color: #d8cfdc; margin: 0 0 1.4rem; }
+  .lab-band__stat { text-align: center; flex-shrink: 0; }
+  .lab-band__num { display: block; font-family: var(--display); font-size: clamp(2.5rem, 7vw, 4rem); color: var(--rose); line-height: 1; }
+  .lab-band__label { display: block; margin-top: 0.6rem; font-size: 0.9rem; color: #d8cfdc; max-width: 16ch; }
+  @media (max-width: 720px) { .lab-band__inner { flex-direction: column; text-align: center; align-items: center; } .lab-band__title { max-width: none; } }
+
+  .now-snip { text-align: center; margin-block: 3rem 1rem; }
+  .now-snip p { font-size: 1.1rem; margin-top: 0.4rem; }
+</style>

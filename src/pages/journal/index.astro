@@ -1,0 +1,73 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('journal', (p) => !p.data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const pillars = ['All', 'Life', 'Wellness', 'Books', 'Career'];
+---
+<Base title="Journal — Kavya" description="Essays on work, wellness, books, and personal growth.">
+  <section class="container page">
+    <span class="eyebrow">Journal</span>
+    <h1>Everything I’m writing.</h1>
+    <p class="muted lead">Filter by what you’re here for.</p>
+
+    <div class="filters" role="tablist">
+      {pillars.map((p) => (
+        <button class={`filter ${p === 'All' ? 'is-active' : ''}`} data-pillar={p}>{p}</button>
+      ))}
+    </div>
+
+    {posts.length === 0 ? (
+      <p class="muted empty">No posts yet. Add a Markdown file in <code>src/content/journal</code> and it appears here automatically.</p>
+    ) : (
+      <div class="grid3" id="postgrid">
+        {posts.map((p) => (
+          <div class="cardwrap" data-pillar={p.data.pillar}>
+            <PostCard
+              href={`/journal/${p.slug}`}
+              title={p.data.title}
+              description={p.data.description}
+              pillar={p.data.pillar}
+              date={p.data.date}
+              readTime={`${Math.max(1, Math.round(p.body.split(/\s+/).length / 200))} min`}
+            />
+          </div>
+        ))}
+      </div>
+    )}
+  </section>
+</Base>
+
+<script>
+  // Pillar filter + deep-link support (?pillar=Wellness from nav/footer).
+  const buttons = document.querySelectorAll('.filter');
+  const cards = document.querySelectorAll('.cardwrap');
+  function apply(pillar) {
+    buttons.forEach((b) => b.classList.toggle('is-active', b.dataset.pillar === pillar));
+    cards.forEach((c) => { c.style.display = (pillar === 'All' || c.dataset.pillar === pillar) ? '' : 'none'; });
+  }
+  buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.pillar)));
+  const url = new URL(window.location.href);
+  const initial = url.searchParams.get('pillar');
+  if (initial) apply(initial);
+</script>
+
+<style>
+  .page { padding-block: clamp(2.5rem, 6vw, 4rem); }
+  .page h1 { margin: 0.5rem 0 0.3rem; }
+  .lead { margin-bottom: 1.5rem; }
+  .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .filter {
+    font-family: var(--body); font-size: 0.9rem; font-weight: 500;
+    padding: 0.4rem 1rem; border-radius: 999px; cursor: pointer;
+    background: var(--white); border: 1px solid var(--sand); color: var(--ink);
+    transition: 0.2s;
+  }
+  .filter:hover { border-color: var(--rose); }
+  .filter.is-active { background: var(--plum); color: var(--white); border-color: var(--plum); }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  @media (max-width: 820px) { .grid3 { grid-template-columns: 1fr; } }
+  .empty { margin-top: 2rem; }
+</style>

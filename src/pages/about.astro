@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Signup from '../components/Signup.astro';
+---
+<Base title="About — Kavya" description="Who I am and why this site exists.">
+  <article class="container measure page">
+    <span class="eyebrow">About</span>
+    <h1>Hi, I’m Kavya.</h1>
+    <div class="prose">
+      <p>I spend my days as a product manager in fintech — a world of edge cases, customer journeys, and the small details that decide whether a product feels trustworthy. I love the craft of it. But I’ve always been the person with thirty open tabs: a book half-read, a new routine I’m testing, a question I can’t stop turning over.</p>
+      <p>This site is where those tabs live. It’s where I write about the things I’m learning — about work and careers, about wellness and the unglamorous business of taking care of yourself, about books worth your time, and about the strange, satisfying process of building an audience from scratch.</p>
+      <p>That last part deserves a note. I’m teaching myself marketing — content, SEO, email, the occasional ad experiment — and instead of hiding the learning curve, I’m documenting it out in the open in a section I call the <a href="/lab">Growth Lab</a>. The numbers are real. The mistakes are real. If you’ve ever wanted to see how a personal brand actually gets built, pull up a chair.</p>
+      <p>If you’re navigating your own career, trying to live a little more intentionally, or just like a good book recommendation — I think you’ll feel at home here.</p>
+      <p><em>Currently: a PM, and curious about product marketing and growth. If that’s your world, <a href="mailto:hello@example.com">say hi</a>.</em></p>
+    </div>
+    <Signup compact={true} />
+  </article>
+</Base>
+
+<style>
+  .page { padding-block: clamp(2.5rem, 6vw, 4rem); }
+  .page h1 { margin: 0.5rem 0 1.5rem; }
+</style>

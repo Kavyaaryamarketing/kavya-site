@@ -1,0 +1,54 @@
+---
+const links = [
+  { href: '/journal', label: 'Journal' },
+  { href: '/lab', label: 'Growth Lab' },
+  { href: '/about', label: 'About' },
+  { href: '/now', label: 'Now' },
+];
+const path = Astro.url.pathname;
+---
+<header class="nav">
+  <div class="container nav__inner">
+    <a href="/" class="nav__brand">Kavya</a>
+
+    <input type="checkbox" id="navtoggle" class="nav__toggle" aria-label="Open menu" />
+    <label for="navtoggle" class="nav__burger" aria-hidden="true"><span></span><span></span><span></span></label>
+
+    <nav class="nav__links" aria-label="Primary">
+      {links.map((l) => (
+        <a href={l.href} class={path.startsWith(l.href) ? 'is-active' : ''}>{l.label}</a>
+      ))}
+      <a href="/newsletter" class="btn nav__cta">Subscribe</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--cream) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--sand);
+  }
+  .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .nav__brand { font-family: var(--display); font-weight: 600; font-size: 1.4rem; color: var(--ink); text-decoration: none; letter-spacing: -0.02em; }
+  .nav__links { display: flex; align-items: center; gap: 1.6rem; }
+  .nav__links a { font-family: var(--body); font-weight: 500; font-size: 0.95rem; color: var(--ink); text-decoration: none; }
+  .nav__links a:hover { color: var(--plum); }
+  .nav__links a.is-active { color: var(--plum); }
+  .nav__cta { color: var(--white) !important; }
+  .nav__toggle, .nav__burger { display: none; }
+
+  @media (max-width: 720px) {
+    .nav__burger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+    .nav__burger span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: 0.2s; }
+    .nav__links {
+      position: absolute; top: 64px; left: 0; right: 0;
+      flex-direction: column; align-items: flex-start; gap: 1rem;
+      background: var(--cream); border-bottom: 1px solid var(--sand);
+      padding: 1.2rem clamp(1.2rem, 5vw, 2.5rem); display: none;
+    }
+    .nav__toggle:checked ~ .nav__links { display: flex; }
+    .nav__cta { align-self: stretch; text-align: center; }
+  }
+</style>

@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+// Update this page roughly once a month. Change the date below when you do.
+const updated = 'June 2026';
+---
+<Base title="Now — Kavya" description="What I’m focused on this month.">
+  <article class="container measure page">
+    <span class="eyebrow">Now</span>
+    <h1>What I’m up to right now</h1>
+    <p class="muted">Last updated: {updated}</p>
+    <div class="prose">
+      <p><strong>Building.</strong> I just launched this site and I’m finding my writing rhythm — one post a week, no excuses (so far).</p>
+      <p><strong>Learning.</strong> Deep in SEO and email marketing. Currently running my first newsletter-growth experiment — follow along in the <a href="/lab">Growth Lab</a>.</p>
+      <p><strong>Reading.</strong> A novel I keep recommending and a non-fiction book on habits I’m putting to the test.</p>
+      <p><strong>Practising.</strong> Pilates three times a week and trying to protect my mornings from my inbox.</p>
+      <p><strong>Thinking about.</strong> How a product manager’s instincts — customer obsession, experiments, metrics — quietly transfer to marketing.</p>
+      <hr />
+      <p class="muted"><em>This is a <a href="https://nownownow.com/about" rel="noopener">now page</a> — a snapshot of my focus today, refreshed each month.</em></p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .page { padding-block: clamp(2.5rem, 6vw, 4rem); }
+  .page h1 { margin: 0.5rem 0 0.3rem; }
+</style>

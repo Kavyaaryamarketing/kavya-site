@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import Signup from '../../components/Signup.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('journal', (p) => !p.data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const d = post.data.date.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+const readTime = Math.max(1, Math.round(post.body.split(/\s+/).length / 200));
+const tagClass = 'tag tag--' + post.data.pillar.toLowerCase();
+---
+<Base title={`${post.data.title} — Kavya`} description={post.data.description}>
+  <div class="progress" id="progress"></div>
+
+  <article class="container measure post">
+    <div class="post__meta">
+      <span class={tagClass}>{post.data.pillar}</span>
+      <span class="muted">{d} · {readTime} min read</span>
+    </div>
+    <h1 class="post__title">{post.data.title}</h1>
+    <p class="post__desc">{post.data.description}</p>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <Signup compact={true} />
+
+    <p class="post__back"><a href="/journal">← Back to the journal</a></p>
+  </article>
+</Base>
+
+<script>
+  const bar = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    bar.style.width = max > 0 ? `${(h.scrollTop / max) * 100}%` : '0%';
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+<style>
+  .progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--plum); z-index: 100; }
+  .post { padding-block: clamp(2.5rem, 6vw, 4rem); }
+  .post__meta { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+  .post__title { margin: 0 0 0.6rem; }
+  .post__desc { font-size: 1.2rem; color: #524d48; font-family: var(--display); font-style: italic; margin: 0 0 2rem; }
+  .post__back { margin-top: 2.5rem; }
+  .post__back a { text-decoration: none; font-weight: 600; }
+</style>

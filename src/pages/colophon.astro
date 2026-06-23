@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Colophon — Kavya" description="How this site is built.">
+  <article class="container measure page">
+    <span class="eyebrow">Colophon</span>
+    <h1>How this site is built</h1>
+    <div class="prose">
+      <p>A short note for the curious — and a small reminder to myself that the medium is part of the message.</p>
+      <ul>
+        <li><strong>Built with</strong> Astro, hand-written CSS, no template.</li>
+        <li><strong>Type</strong> set in Fraunces (display) and Inter (body).</li>
+        <li><strong>Hosted</strong> on Vercel; deployed automatically from GitHub.</li>
+        <li><strong>Measured</strong> with Google Analytics 4 and Search Console.</li>
+        <li><strong>Newsletter</strong> runs on Kit.</li>
+      </ul>
+      <p>Everything here — the design, the writing, the growth — is something I’m doing on purpose and documenting in the <a href="/lab">Growth Lab</a>.</p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .page { padding-block: clamp(2.5rem, 6vw, 4rem); }
+  .page h1 { margin: 0.5rem 0 1.2rem; }
+</style>

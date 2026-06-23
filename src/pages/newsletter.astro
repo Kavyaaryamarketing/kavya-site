@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Signup from '../components/Signup.astro';
+---
+<Base title="Newsletter — Kavya" description="One thoughtful email, roughly every other Sunday.">
+  <article class="container measure page">
+    <span class="eyebrow">The newsletter</span>
+    <h1>The best way to follow along.</h1>
+    <div class="prose">
+      <p>Once every couple of weeks I send a short, personal email: something I learned, something I’m reading, and an honest update on how this site is growing — the wins and the flat months alike.</p>
+      <p>It’s the one place I share the behind-the-scenes thinking that doesn’t make it into a full post. No fluff, no daily barrage, unsubscribe in one click.</p>
+    </div>
+    <Signup />
+    <div class="prose">
+      <h2>What past issues looked like</h2>
+      <p class="muted">Archive coming soon — your first issue will be the welcome email with my three favourite posts.</p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .page { padding-block: clamp(2.5rem, 6vw, 4rem); }
+  .page h1 { margin: 0.5rem 0 1.2rem; }
+</style>

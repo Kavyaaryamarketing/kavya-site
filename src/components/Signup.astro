@@ -1,0 +1,37 @@
+---
+const { compact = false } = Astro.props;
+---
+<section class={`signup ${compact ? 'signup--compact' : ''}`}>
+  <div class="signup__inner">
+    {!compact && <span class="eyebrow">The newsletter</span>}
+    <h2 class="signup__title">One thoughtful email, roughly every other Sunday.</h2>
+    <p class="signup__sub muted">Something I learned, something I’m reading, and a peek at how this site is growing. No spam, unsubscribe anytime.</p>
+
+    <!--
+      Replace action="#" with the form URL from Kit / Beehiiv / Substack.
+      Those tools give you an HTML embed; paste its action + input name here.
+      Keep it to email only — fewer fields = more signups.
+    -->
+    <form class="signup__form" action="#" method="post">
+      <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" />
+      <button type="submit" class="btn">Subscribe</button>
+    </form>
+    <!-- <p class="signup__proof muted">Join 300+ curious readers.</p> -->
+  </div>
+</section>
+
+<style>
+  .signup { background: var(--sand); border-radius: var(--radius); padding: 2.4rem; margin: 3rem 0; }
+  .signup--compact { background: var(--white); border: 1px solid var(--sand); padding: 1.6rem; margin: 2rem 0; }
+  .signup__inner { max-width: 34rem; margin-inline: auto; text-align: center; }
+  .signup__title { margin: 0.6rem 0 0.4rem; font-size: 1.5rem; }
+  .signup--compact .signup__title { font-size: 1.25rem; }
+  .signup__sub { font-size: 0.95rem; margin: 0 0 1.2rem; }
+  .signup__form { display: flex; gap: 0.6rem; }
+  .signup__form input {
+    flex: 1; padding: 0.7rem 1rem; border: 1px solid #cfc7bc;
+    border-radius: 999px; font-family: var(--body); font-size: 1rem; background: var(--white);
+  }
+  .signup__form input:focus { border-color: var(--plum); outline: none; }
+  @media (max-width: 520px) { .signup__form { flex-direction: column; } .signup__form .btn { width: 100%; } }
+</style>

@@ -1,0 +1,29 @@
+---
+const { href, title, description, pillar, date, readTime } = Astro.props;
+const d = new Date(date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+const tagClass = 'tag tag--' + String(pillar).toLowerCase();
+---
+<a class="card reveal" href={href}>
+  <div class="card__meta">
+    <span class={tagClass}>{pillar}</span>
+    <span class="muted card__date">{d}{readTime ? ` · ${readTime}` : ''}</span>
+  </div>
+  <h3 class="card__title">{title}</h3>
+  <p class="card__desc muted">{description}</p>
+  <span class="card__more">Read →</span>
+</a>
+
+<style>
+  .card {
+    display: block; text-decoration: none; color: inherit;
+    background: var(--white); border: 1px solid var(--sand);
+    border-radius: var(--radius); padding: 1.4rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(43,43,46,0.08); border-color: var(--rose); }
+  .card__meta { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.7rem; }
+  .card__date { font-size: 0.8rem; }
+  .card__title { margin: 0 0 0.4rem; font-size: 1.25rem; }
+  .card__desc { margin: 0 0 0.9rem; font-size: 0.95rem; }
+  .card__more { font-family: var(--body); font-weight: 600; font-size: 0.9rem; color: var(--plum); }
+</style>

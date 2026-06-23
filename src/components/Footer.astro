@@ -1,0 +1,54 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="foot">
+  <div class="container foot__grid">
+    <div class="foot__col foot__about">
+      <span class="foot__brand">Kavya</span>
+      <p class="muted">Thinking out loud about work, wellness, books, and building in public.</p>
+      <p class="foot__hire">Currently a product manager — exploring product marketing &amp; growth roles. <a href="/about">Say hi →</a></p>
+    </div>
+
+    <div class="foot__col">
+      <h4>Explore</h4>
+      <a href="/journal?pillar=Life">Life</a>
+      <a href="/journal?pillar=Wellness">Wellness</a>
+      <a href="/journal?pillar=Books">Books</a>
+      <a href="/journal?pillar=Career">Career</a>
+      <a href="/lab">Growth Lab</a>
+    </div>
+
+    <div class="foot__col">
+      <h4>Connect</h4>
+      <!-- Replace # with your real profiles -->
+      <a href="/newsletter">Newsletter</a>
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+      <a href="/rss.xml">RSS</a>
+    </div>
+
+    <div class="foot__col">
+      <h4>More</h4>
+      <a href="/now">Now</a>
+      <a href="/about">About</a>
+      <a href="/colophon">Colophon</a>
+    </div>
+  </div>
+  <div class="container foot__base">
+    <span class="muted">© {year} Kavya. Built with Astro.</span>
+  </div>
+</footer>
+
+<style>
+  .foot { background: var(--ink); color: #d8d3cd; margin-top: 5rem; padding: 3rem 0 2rem; }
+  .foot__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+  .foot__brand { font-family: var(--display); font-size: 1.4rem; color: var(--white); display: block; margin-bottom: 0.5rem; }
+  .foot__about p { font-size: 0.95rem; color: #b3aea8; }
+  .foot__hire { font-size: 0.9rem !important; }
+  .foot__hire a { color: var(--rose); }
+  .foot__col h4 { font-family: var(--body); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: #8f8a84; margin: 0 0 0.8rem; }
+  .foot__col a { display: block; color: #d8d3cd; text-decoration: none; font-size: 0.95rem; padding: 0.18rem 0; }
+  .foot__col a:hover { color: var(--white); }
+  .foot__base { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #3a3a3e; font-size: 0.85rem; }
+  @media (max-width: 720px) { .foot__grid { grid-template-columns: 1fr 1fr; } .foot__about { grid-column: 1 / -1; } }
+</style>

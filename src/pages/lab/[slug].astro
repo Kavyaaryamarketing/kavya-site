@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('lab', (p) => !p.data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const d = post.data.date.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base title={`${post.data.title} — Growth Lab`} description={post.data.description}>
+  <article class="container measure post">
+    <p class="post__back"><a href="/lab">← Growth Lab</a></p>
+    <div class="post__meta">
+      <span class={`badge badge--${post.data.result}`}>{post.data.result}</span>
+      {post.data.metric && <span class="post__metric">{post.data.metric}</span>}
+      <span class="muted">{d}</span>
+    </div>
+    <h1 class="post__title">{post.data.title}</h1>
+    <p class="post__desc">{post.data.description}</p>
+    <div class="prose"><Content /></div>
+  </article>
+</Base>
+
+<style>
+  .post { padding-block: clamp(2.5rem, 6vw, 4rem); }
+  .post__back { margin-bottom: 1.5rem; }
+  .post__back a { text-decoration: none; font-weight: 600; }
+  .post__meta { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+  .post__metric { font-family: var(--display); font-weight: 600; color: var(--plum); }
+  .post__title { margin: 0 0 0.6rem; }
+  .post__desc { font-size: 1.2rem; color: #524d48; font-family: var(--display); font-style: italic; margin: 0 0 2rem; }
+  .badge { font-family: var(--body); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.6rem; border-radius: 5px; }
+  .badge--won { background: #e4ece2; color: #4f6b4a; }
+  .badge--lost { background: #f3e0e0; color: #9a4b4b; }
+  .badge--inconclusive { background: var(--sand); color: var(--ink); }
+  .badge--ongoing { background: #e6e1ec; color: var(--plum-deep); }
+</style>

@@ -1,0 +1,140 @@
+/* ===========================================================
+   Kavya — design tokens & base styles
+   Edit colors/fonts here once; the whole site follows.
+   =========================================================== */
+
+:root {
+  /* palette */
+  --ink:   #2b2b2e;
+  --plum:  #6b4e71;
+  --plum-deep: #4a3550;
+  --rose:  #c98b9b;
+  --sage:  #8a9a86;
+  --sand:  #eae3da;
+  --cream: #f5f1ec;
+  --white: #ffffff;
+  --muted: #8a857f;
+
+  /* type */
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* layout */
+  --measure: 42rem;       /* readable article width */
+  --wide: 64rem;          /* page container */
+  --radius: 12px;
+  --gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.075rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+h1 { font-size: clamp(2.1rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.1rem); }
+h3 { font-size: 1.3rem; }
+
+a { color: var(--plum); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--plum-deep); }
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* layout helpers */
+.container { width: 100%; max-width: var(--wide); margin-inline: auto; padding-inline: clamp(1.2rem, 5vw, 2.5rem); }
+.measure { max-width: var(--measure); margin-inline: auto; }
+.eyebrow {
+  font-family: var(--body);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--rose);
+}
+.muted { color: var(--muted); }
+
+/* buttons */
+.btn {
+  display: inline-block;
+  background: var(--plum);
+  color: var(--white);
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.btn:hover { background: var(--plum-deep); color: var(--white); transform: translateY(-1px); }
+.btn--ghost { background: transparent; color: var(--plum); border: 1px solid var(--sand); }
+.btn--ghost:hover { background: var(--sand); color: var(--ink); }
+
+/* pillar tag */
+.tag {
+  display: inline-block;
+  font-family: var(--body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--sand);
+  color: var(--ink);
+}
+.tag--life     { background: #efe3ef; color: var(--plum); }
+.tag--wellness { background: #e4ece2; color: var(--sage); }
+.tag--books    { background: #f3e3e7; color: var(--rose); }
+.tag--career   { background: #e6e1ec; color: var(--plum-deep); }
+
+/* reveal on scroll */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* article prose */
+.prose { font-size: 1.12rem; }
+.prose > * + * { margin-top: 1.15rem; }
+.prose h2 { margin-top: 2.4rem; }
+.prose h3 { margin-top: 1.8rem; }
+.prose blockquote {
+  margin: 1.8rem 0;
+  padding-left: 1.2rem;
+  border-left: 3px solid var(--rose);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--plum);
+}
+.prose code {
+  background: var(--sand);
+  padding: 0.1rem 0.35rem;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+.prose hr { border: none; border-top: 1px solid var(--sand); margin: 2.5rem 0; }
+.prose img { border-radius: var(--radius); margin: 2rem 0; }
+
+/* focus visibility */
+:focus-visible { outline: 2px solid var(--plum); outline-offset: 2px; border-radius: 4px; }
