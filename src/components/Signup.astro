@@ -7,15 +7,9 @@ const { compact = false } = Astro.props;
     <h2 class="signup__title">One thoughtful email, roughly every other Sunday.</h2>
     <p class="signup__sub muted">Something I learned, something I’m reading, and a peek at how this site is growing. No spam, unsubscribe anytime.</p>
 
-    <!--
-      Replace action="#" with the form URL from Kit / Beehiiv / Substack.
-      Those tools give you an HTML embed; paste its action + input name here.
-      Keep it to email only — fewer fields = more signups.
-    -->
-    <form class="signup__form" action="#" method="post">
-      <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" />
-      <button type="submit" class="btn">Subscribe</button>
-    </form>
+    <a href="https://kavyaarya.substack.com" target="_blank" rel="noopener" class="btn">
+      Subscribe — it's free →
+    </a>
     <!-- <p class="signup__proof muted">Join 300+ curious readers.</p> -->
   </div>
 </section>
